@@ -18,17 +18,20 @@ class Game(object):
         self.board = Board(print_function)
         self.menu = Menu(read_function, print_function)
         self.print_function = print_function
-        
+
     def start(self):
         while True:            
             option = self.menu.ask_menu_option()
             if option == self.EXIT_OPTION:
                 break
             else:
-                self.board.create_numeric_cells()
-                self.print_game_instructions()
-                self.board.clean_marks()
-                self.ask_cells()
+                self.start_new_game()
+                
+    def start_new_game(self):
+        self.board.create_numeric_cells()
+        self.print_game_instructions()
+        self.board.clean_marks()
+        self.ask_cells()
     
     def print_game_instructions(self):
         self.print_function('Select the number of the cell that you want to mark\n')
@@ -84,7 +87,7 @@ class Game(object):
     def is_won_in_rows(self):        
         return self.is_won_in_row(1) or self.is_won_in_row(2) or self.is_won_in_row(3)
     
-    def is_won_in_colums(self):
+    def is_won_in_columns(self):
         return self.is_won_in_column(1) or self.is_won_in_column(2) or self.is_won_in_column(3)
     
     def is_won_in_diagonal(self, start_index, step):
@@ -96,5 +99,5 @@ class Game(object):
             or self.is_won_in_diagonal(self.UPPER_RIGHT_CELL, self.FROM_RIGHT_TO_LEFT_DIAGONAL_STEP)
     
     def is_won(self):
-        return self.is_won_in_colums() or self.is_won_in_rows() or self.is_won_in_diagonals()
+        return self.is_won_in_columns() or self.is_won_in_rows() or self.is_won_in_diagonals()
         
